@@ -5,6 +5,8 @@ import d3 from 'd3';
 
 require('./style.less');
 
+import Letter from './Letter';
+
 class Alphabet extends Component {
     alphabet = "abcdefghijklmnopqrstuvwxyz".split('');
     state = {letters: []}
@@ -31,31 +33,31 @@ class Alphabet extends Component {
                       .data(data, (d) => d);
 
         // EXIT old elements not present in new data
-        text.exit()
-            .attr("class", "exit")
-            .transition(t)
-            .attr("y", 60)
-            .style("fill-opacity", 1e-6)
-            .remove();
+        /* text.exit()
+           .attr("class", "exit")
+           .transition(t)
+           .attr("y", 60)
+           .style("fill-opacity", 1e-6)
+           .remove();
 
-        // UPDATE old elements present in new data
-        text.attr("class", "update")
-            .attr("y", 0)
-            .style("fill-opacity", 1)
-            .transition(t)
-            .attr("x", (d, i) => i * 32);
+           // UPDATE old elements present in new data
+           text.attr("class", "update")
+           .attr("y", 0)
+           .style("fill-opacity", 1)
+           .transition(t)
+           .attr("x", (d, i) => i * 32);
 
-        // ENTER new elements present in new data
-        text.enter().append("text")
-            .attr("class", "enter")
-            .attr("dy", ".35em")
-            .attr("y", -60)
-            .attr("x", (d, i) => i * 32)
-            .style("fill-opacity", 1e-6)
-            .text((d) => d)
-            .transition(t)
-            .attr("y", 0)
-            .style("fill-opacity", 1);
+           // ENTER new elements present in new data
+           text.enter().append("text")
+           .attr("class", "enter")
+           .attr("dy", ".35em")
+           .attr("y", -60)
+           .attr("x", (d, i) => i * 32)
+           .style("fill-opacity", 1e-6)
+           .text((d) => d)
+           .transition(t)
+           .attr("y", 0)
+           .style("fill-opacity", 1); */
     }
 
     render() {
@@ -63,7 +65,9 @@ class Alphabet extends Component {
 
         return (
             <g transform={transform}>
-
+                {this.state.letters.map((d, i) => (
+                    <Letter d={d} i={i} key={`letter-${i}`} />
+                 ))}
             </g>
         );
     }
