@@ -16,7 +16,7 @@ declarative. It renders `Letter`s using a naive loop.
         return (
             <g transform={transform}>
                 <ReactTransitionGroup component="g">
-                    {this.state.letters.map((d, i) => (
+                    {this.state.alphabet.map((d, i) => (
                         <Letter d={d} i={i} key={`letter-${d}`} />
                      ))}
                 </ReactTransitionGroup>

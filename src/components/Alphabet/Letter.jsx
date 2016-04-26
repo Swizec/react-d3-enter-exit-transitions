@@ -46,10 +46,7 @@ class Letter extends Component {
         if (this.props.i != nextProps.i) {
             let node = d3.select(ReactDOM.findDOMNode(this));
 
-            this.setState({className: 'update',
-                           y: 0,
-                           fillOpacity: 1,
-                           old_i: this.props.i});
+            this.setState({className: 'update'});
 
             node.transition(this.transition)
                 .attr('x', nextProps.i*32)
