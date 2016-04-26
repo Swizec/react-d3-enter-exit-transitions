@@ -1,5 +1,5 @@
 {
-  "name": "react-transitions",
+  "name": "react-d3-enter-exit-transitions",
   "version": "1.0.0",
   "description": "A proof of concept exploration of using d3js transitions in a React visualization.",
   "scripts": {
