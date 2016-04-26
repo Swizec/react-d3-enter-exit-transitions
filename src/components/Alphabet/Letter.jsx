@@ -57,21 +57,20 @@ class Letter extends Component {
        .transition(t)
        .attr("x", (d, i) => i * 32); */
 
-    componentWillUpdate(nextProps, nextState) {
-        console.log(this.props, nextProps);
+    componentWillReceiveProps(nextProps) {
+        if (this.props.old_i != nextProps.old_i) {
+            let node = d3.select(ReactDOM.findDOMNode(this));
+
+            this.setState({className: 'update',
+                           y: 0,
+                           fillOpacity: 1});
+
+            node.transition()
+                .duration(750)
+                .attr('x', nextProps.i*32);
+        }
+
     }
-
-    /* componentDidUpdate() {
-       this.setState({className: 'update',
-       y: 0,
-       fillOpacity: 1});
-
-       let node = d3.select(ReactDOM.findDOMNode(this));
-
-       node.transition()
-       .duration(750)
-       .attr('x', this.props.i*32);
-       } */
 
     /* ext.exit()
        .attr("class", "exit")
@@ -92,10 +91,12 @@ class Letter extends Component {
        } */
 
     render() {
+        let x = this.props.old_i ? this.props.old_i*32 : this.props.i*32;
+
         return (
             <text dy=".35em"
                   y={this.state.y}
-                  x={this.props.i*32}
+                  x={x}
                   className={this.state.className}
                   style={{fillOpacity: this.state.fillOpacity}}>
                 {this.props.d}

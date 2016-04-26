@@ -16,11 +16,22 @@ class Alphabet extends Component {
     componentDidMount() {
         this.update(this.state.letters);
 
-        d3.interval(() => {
-            this.setState({letters: d3.shuffle(this.alphabet)
-                                      .slice(0, Math.floor(Math.random() * this.alphabet.length))
-                                      .sort()})
-        }, 1500);
+        d3.interval(() => this.updateLetters(), 1500);
+    }
+
+    updateLetters() {
+        let oldLetters = this.state.letters,
+            newLetters = d3.shuffle(this.alphabet)
+                           .slice(0, Math.floor(Math.random() * this.alphabet.length))
+                           .sort(),
+            oldIndexes = {};
+
+        oldLetters.forEach((l, i) => oldIndexes[l] = i);
+
+        this.setState({
+            letters: newLetters,
+            oldIndexes: oldIndexes
+        })
     }
 
     update(data) {
@@ -68,7 +79,8 @@ class Alphabet extends Component {
             <g transform={transform}>
                 <ReactTransitionGroup component="g">
                 {this.state.letters.map((d, i) => (
-                    <Letter d={d} i={i} key={`letter-${i}`} />
+                    <Letter d={d} i={i}
+                            old_i={this.state.oldIndexes[d]} key={`letter-${i}`} />
                  ))}
                 </ReactTransitionGroup>
             </g>
