@@ -9,12 +9,14 @@ class Letter extends Component {
         className: 'enter',
         fillOpacity: 1e-6
     }
+    transition = d3.transition()
+                   .duration(750)
+                   .ease(d3.easeCubicInOut);
 
     componentWillEnter(callback) {
         let node = d3.select(ReactDOM.findDOMNode(this));
 
-        node.transition()
-            .duration(750)
+        node.transition(this.transition)
             .attr('y', 0)
             .style('fill-opacity', 1)
             .on('end', callback);
@@ -25,8 +27,7 @@ class Letter extends Component {
 
         this.setState({className: 'exit'});
 
-        node.transition()
-            .duration(750)
+        node.transition(this.transition)
             .attr('y', 60)
             .style('fill-opacity', 1e-6)
             .on('end', callback);
@@ -41,8 +42,7 @@ class Letter extends Component {
                            fillOpacity: 1,
                            old_i: this.props.i});
 
-            node.transition()
-                .duration(750)
+            node.transition(this.transition)
                 .attr('x', nextProps.i*32);
         }
     }
