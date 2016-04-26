@@ -51,13 +51,10 @@ class Letter extends Component {
     }
 
     render() {
-        // this prevents jumpiness
-        let x = this.state.old_i ? this.state.old_i*32 : this.props.i*32;
-
         return (
             <text dy=".35em"
                   y={this.state.y}
-                  x={x}
+                  x={this.state.x}
                   className={this.state.className}
                   style={{fillOpacity: this.state.fillOpacity}}>
                 {this.props.d}
