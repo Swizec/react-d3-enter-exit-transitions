@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import d3 from 'd3';
 
 require('./style.less');
@@ -65,9 +66,11 @@ class Alphabet extends Component {
 
         return (
             <g transform={transform}>
+                <ReactTransitionGroup component="g">
                 {this.state.letters.map((d, i) => (
                     <Letter d={d} i={i} key={`letter-${i}`} />
                  ))}
+                </ReactTransitionGroup>
             </g>
         );
     }

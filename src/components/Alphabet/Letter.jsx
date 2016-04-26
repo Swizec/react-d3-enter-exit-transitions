@@ -12,32 +12,56 @@ class Letter extends Component {
         fillOpacity: 1e-6
     }
 
-    /* text.enter().append("text")
-       .attr("class", "enter")
-       .attr("dy", ".35em")
-       .attr("y", -60)
-       .attr("x", (d, i) => i * 32)
-       .style("fill-opacity", 1e-6)
-       .text((d) => d)
-       .transition(t)
-       .attr("y", 0)
-       .style("fill-opacity", 1); */
+    componentWillAppear(callback) {
+        //console.log('willAppear');
+    }
 
-    componentDidMount() {
+    componentDidAppear() {
+        //console.log('didAppear');
+    }
+
+    componentWillEnter(callback) {
         let node = d3.select(ReactDOM.findDOMNode(this));
 
-        // there should be a reactier way to do this
         node.transition()
             .duration(750)
             .attr('y', 0)
             .style('fill-opacity', 1);
+
+        callback();
     }
 
-    /* shouldComponentUpdate(nextProps, nextState) {
-       return this.props.d != nextProps.d || this.props.i != nextProps.i;
-       }
+    componentDidEnter() {
+        //console.log('didEnter');
+    }
 
-       componentDidUpdate() {
+    componentWillLeave(callback) {
+        let node = d3.select(ReactDOM.findDOMNode(this));
+
+        this.setState({className: 'exit'});
+
+        node.transition()
+            .duration(750)
+            .attr('y', 60)
+            .style('fill-opacity', 1e-6)
+            .on('end', callback);
+    }
+
+    componentDidLeave() {
+        //console.log('didLeave');
+    }
+
+    /* text.attr("class", "update")
+       .attr("y", 0)
+       .style("fill-opacity", 1)
+       .transition(t)
+       .attr("x", (d, i) => i * 32); */
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log(this.props, nextProps);
+    }
+
+    /* componentDidUpdate() {
        this.setState({className: 'update',
        y: 0,
        fillOpacity: 1});
@@ -48,6 +72,7 @@ class Letter extends Component {
        .duration(750)
        .attr('x', this.props.i*32);
        } */
+
     /* ext.exit()
        .attr("class", "exit")
        .transition(t)
@@ -55,16 +80,16 @@ class Letter extends Component {
        .style("fill-opacity", 1e-6)
        .remove(); */
 
-    componentWillUnmount() {
-        let node = d3.select(ReactDOM.findDOMNode(this));
+    /* componentWillUnmount() {
+       let node = d3.select(ReactDOM.findDOMNode(this));
 
-        this.setState({className: 'exit'});
+       this.setState({className: 'exit'});
 
-        node.transition()
-            .duration(750)
-            .attr('y', 60)
-            .style('fill-opacity', 1e-6);
-    }
+       node.transition()
+       .duration(750)
+       .attr('y', 60)
+       .style('fill-opacity', 1e-6);
+       } */
 
     render() {
         return (

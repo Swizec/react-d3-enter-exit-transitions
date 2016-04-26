@@ -57,6 +57,7 @@
     "d3": "^4.0.0-alpha.29",
     "lodash": "^4.6.1",
     "react": "^15.0.0",
+    "react-addons-transition-group": "^15.0.1",
     "react-dom": "^15.0.0"
   }
 }
