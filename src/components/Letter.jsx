@@ -37,7 +37,8 @@ class Letter extends Component {
 
         this.setState({color: ExitColor});
 
-        node.transition(this.transition)
+        node.interrupt()
+            .transition(this.transition)
             .attr('y', 60)
             .style('fill-opacity', 1e-6)
             .on('end', () => {
@@ -66,7 +67,7 @@ class Letter extends Component {
                   style={{fillOpacity: this.state.fillOpacity,
                           fill: this.state.color,
                           font: 'bold 48px monospace'}}>
-                {this.props.d}
+                {this.props.letter}
             </text>
         );
     }

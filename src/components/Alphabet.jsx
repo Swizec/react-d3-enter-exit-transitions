@@ -24,7 +24,7 @@ class Alphabet extends Component {
             <g transform={transform}>
                 <ReactTransitionGroup component="g">
                     {this.state.alphabet.map((d, i) => (
-                        <Letter d={d} i={i} key={`letter-${d}`} />
+                        <Letter letter={d} i={i} key={`letter-${d}`} />
                      ))}
                 </ReactTransitionGroup>
             </g>
