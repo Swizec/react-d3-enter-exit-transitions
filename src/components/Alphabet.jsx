@@ -18,13 +18,17 @@ class Alphabet extends Component {
     }
 
     render() {
-        let transform = `translate(${this.props.x}, ${this.props.y})`;
+        let transform = `translate(${this.props.x}, ${this.props.y})`,
+            transition = d3.transition()
+                           .duration(750)
+                           .ease(d3.easeCubicInOut);
 
         return (
             <g transform={transform}>
                 <ReactTransitionGroup component="g">
                     {this.state.alphabet.map((d, i) => (
-                        <Letter letter={d} i={i} key={`letter-${d}`} />
+                        <Letter letter={d} i={i} key={`letter-${d}`}
+                                transition={transition} />
                      ))}
                 </ReactTransitionGroup>
             </g>

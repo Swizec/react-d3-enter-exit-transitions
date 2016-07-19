@@ -14,9 +14,6 @@ class Letter extends Component {
         color: EnterColor,
         fillOpacity: 1e-6
     }
-    transition = d3.transition()
-                   .duration(750)
-                   .ease(d3.easeCubicInOut);
 
     componentWillEnter(callback) {
         let node = d3.select(ReactDOM.findDOMNode(this));
