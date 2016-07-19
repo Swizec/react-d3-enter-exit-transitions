@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import d3 from 'd3';
 
-require('./style.less');
-
 import Letter from './Letter';
 
 class Alphabet extends Component {
     static letters = "abcdefghijklmnopqrstuvwxyz".split('');
-    state = {alphabet: []}
+    state = {alphabet: []};
 
     componentWillMount() {
         d3.interval(() => this.setState({

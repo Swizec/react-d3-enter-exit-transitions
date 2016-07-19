@@ -3,11 +3,15 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import d3 from 'd3';
 
+const ExitColor = 'brown',
+      UpdateColor = '#333',
+      EnterColor = 'green';
+
 class Letter extends Component {
     state = {
         y: -60,
         x: 0,
-        className: 'enter',
+        color: EnterColor,
         fillOpacity: 1e-6
     }
     transition = d3.transition()
@@ -23,7 +27,7 @@ class Letter extends Component {
             .attr('y', 0)
             .style('fill-opacity', 1)
             .on('end', () => {
-                this.setState({y: 0, fillOpacity: 1});
+                this.setState({y: 0, fillOpacity: 1, color: UpdateColor});
                 callback()
             });
     }
@@ -31,7 +35,7 @@ class Letter extends Component {
     componentWillLeave(callback) {
         let node = d3.select(ReactDOM.findDOMNode(this));
 
-        this.setState({className: 'exit'});
+        this.setState({color: ExitColor});
 
         node.transition(this.transition)
             .attr('y', 60)
@@ -46,7 +50,7 @@ class Letter extends Component {
         if (this.props.i != nextProps.i) {
             let node = d3.select(ReactDOM.findDOMNode(this));
 
-            this.setState({className: 'update'});
+            this.setState({color: UpdateColor});
 
             node.transition(this.transition)
                 .attr('x', nextProps.i*32)
@@ -59,8 +63,9 @@ class Letter extends Component {
             <text dy=".35em"
                   y={this.state.y}
                   x={this.state.x}
-                  className={this.state.className}
-                  style={{fillOpacity: this.state.fillOpacity}}>
+                  style={{fillOpacity: this.state.fillOpacity,
+                          fill: this.state.color,
+                          font: 'bold 48px monospace'}}>
                 {this.props.d}
             </text>
         );
