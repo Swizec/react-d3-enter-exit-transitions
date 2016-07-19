@@ -1,12 +1,12 @@
 
 # React d3 enter/exit animations
 
-![Gif of end result](alphabet.gif)
+![Gif of end result](typing.gif)
 
 This is a proof of concept implementation of declarative enter-update-exit
 transitions built with React and d3js.
 
-The main `Alphabet` component's render method is completely
+The main `FancyText` component's render method is completely
 declarative. It renders `Letter`s using a naive loop.
 
 ```javascript
