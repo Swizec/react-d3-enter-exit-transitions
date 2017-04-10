@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3": "^4.7.4",
     "react": "^15.5.3",
-    "react-dom": "^15.5.3"
+    "react-dom": "^15.5.3",
+    "react-transition-group": "^1.1.1"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

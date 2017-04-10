@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import d3 from 'd3';
+import * as d3 from 'd3';
 
 const ExitColor = 'brown',
       UpdateColor = '#333',
@@ -49,7 +49,7 @@ class Letter extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.i != nextProps.i) {
+        if (this.props.i !== nextProps.i) {
             let node = d3.select(this.refs.letter);
 
             this.setState({color: UpdateColor});

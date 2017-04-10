@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import ReactTransitionGroup from 'react-addons-transition-group';
-import d3 from 'd3';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import * as d3 from 'd3';
 
 import Letter from './Letter';
 
@@ -12,8 +12,8 @@ class Alphabet extends Component {
     componentWillMount() {
         d3.interval(() => this.setState({
             alphabet: d3.shuffle(Alphabet.letters)
-                       .slice(0, Math.floor(Math.random() * Alphabet.letters.length))
-                       .sort()
+                        .slice(0, Math.floor(Math.random() * Alphabet.letters.length))
+                        .sort()
         }), 1500);
     }
 
@@ -22,11 +22,11 @@ class Alphabet extends Component {
 
         return (
             <g transform={transform}>
-                <ReactTransitionGroup component="g">
+                <TransitionGroup component="g">
                     {this.state.alphabet.map((l, i) => (
-                        <Letter letter={l} i={i} key={`letter-${d}`} />
+                        <Letter letter={l} i={i} key={`letter-${l}`} />
                      ))}
-                </ReactTransitionGroup>
+                </TransitionGroup>
             </g>
         );
     }
