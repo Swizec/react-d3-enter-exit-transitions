@@ -1,21 +1,20 @@
 {
-  "name": "react-d3-enter-exit-transitions",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "d3": "^4.12.2",
-    "lodash": "^4.17.4",
-    "react": "^16.2.0",
-    "react-addons-transition-group": "^15.6.2",
-    "react-dom": "^16.2.0"
-  },
-  "devDependencies": {
-    "react-scripts": "1.0.17"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "name": "react-d3-enter-exit-transitions",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "d3": "^5.7.0",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2",
+        "react-transition-group": "^2.5.0"
+    },
+    "devDependencies": {
+        "react-scripts": "1.0.17"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
 }
