@@ -11,13 +11,13 @@ class Letter extends React.Component {
         y: -60,
         x: this.props.index * 32,
         color: EnterColor,
-        fillOpacity: 1e-6,
-        index: this.props.index
+        fillOpacity: 1e-6
     };
     state = this.defaultState;
     letterRef = React.createRef();
 
     onEnter = () => {
+        // Letter is entering the visualization
         let node = d3.select(this.letterRef.current);
 
         node.transition()
@@ -35,17 +35,24 @@ class Letter extends React.Component {
     };
 
     onExit = () => {
+        // Letter is dropping out
         let node = d3.select(this.letterRef.current);
 
-        node.interrupt()
-            .style("fill", ExitColor)
+        node.style("fill", ExitColor)
             .transition(this.transition)
             .attr("y", 60)
-            .style("fill-opacity", 1e-6);
+            .style("fill-opacity", 1e-6)
+            .on("end", () => this.setState(this.defaultState));
     };
 
-    componentDidUpdate() {
-        if (this.state.index !== this.props.index) {
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.in !== this.props.in && this.props.in) {
+            // A new enter transition has begun
+            this.setState({
+                x: this.props.index * 32
+            });
+        } else if (prevProps.index !== this.props.index) {
+            // Letter is moving to a new location
             let node = d3.select(this.letterRef.current),
                 targetX = this.props.index * 32;
 
@@ -63,10 +70,6 @@ class Letter extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        console.log("will unmount");
-    }
-
     render() {
         const { x, y, fillOpacity, color } = this.state,
             { letter } = this.props;
@@ -79,21 +82,19 @@ class Letter extends React.Component {
                 onEnter={this.onEnter}
                 onExit={this.onExit}
             >
-                {state => (
-                    <text
-                        dy=".35em"
-                        x={x}
-                        y={y}
-                        style={{
-                            fillOpacity: fillOpacity,
-                            fill: color,
-                            font: "bold 48px monospace"
-                        }}
-                        ref={this.letterRef}
-                    >
-                        {letter}
-                    </text>
-                )}
+                <text
+                    dy=".35em"
+                    x={x}
+                    y={y}
+                    style={{
+                        fillOpacity: fillOpacity,
+                        fill: color,
+                        font: "bold 48px monospace"
+                    }}
+                    ref={this.letterRef}
+                >
+                    {letter}
+                </text>
             </Transition>
         );
     }
