@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-import ReactTransitionGroup from "react-addons-transition-group";
+import { TransitionGroup } from "react-transition-group";
 import * as d3 from "d3";
 
 import Letter from "./Letter";
 
 class FancyText extends Component {
     state = {
-        text: "",
         textWithIds: [],
         lastId: 0
     };
 
-    componentWillReceiveProps(newProps) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.text === this.props.text) return;
+
         const oldText = this.state.textWithIds;
-        const newText = newProps.text.split("");
+        const newText = this.props.text.split("");
         let indexOfChange = 0,
             sizeOfChange = 0,
             newLastId = this.state.lastId;
@@ -57,42 +58,32 @@ class FancyText extends Component {
             });
 
             // use existing ids from change to end
-            d3
-                .range(indexOfChange + sizeOfChange, newText.length)
-                .forEach(i => (newText[i] = oldText[i - sizeOfChange]));
+            d3.range(indexOfChange + sizeOfChange, newText.length).forEach(
+                i => (newText[i] = oldText[i - sizeOfChange])
+            );
         } else {
             // use existing ids from change to end, but skip what's gone
-            d3
-                .range(indexOfChange, newText.length)
-                .forEach(i => (newText[i] = oldText[i + sizeOfChange]));
+            d3.range(indexOfChange, newText.length).forEach(
+                i => (newText[i] = oldText[i + sizeOfChange])
+            );
         }
 
         this.setState({
-            text: newProps.text,
             textWithIds: newText,
             lastId: newLastId
         });
     }
 
     render() {
-        let { x, y } = this.props,
-            transition = d3
-                .transition()
-                .duration(750)
-                .ease(d3.easeCubicInOut);
+        let { x, y } = this.props;
 
         return (
             <g transform={`translate(${x}, ${y})`}>
-                <ReactTransitionGroup component="g">
+                <TransitionGroup component="g" enter={true} exit={true}>
                     {this.state.textWithIds.map(([l, id], i) => (
-                        <Letter
-                            letter={l}
-                            i={i}
-                            key={id}
-                            transition={transition}
-                        />
+                        <Letter letter={l} index={i} key={id} />
                     ))}
-                </ReactTransitionGroup>
+                </TransitionGroup>
             </g>
         );
     }

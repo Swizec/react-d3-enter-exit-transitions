@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Alphabet from "./components/Alphabet";
-// import FancyText from "./components/FancyText";
+// import Alphabet from "./components/Alphabet";
+import FancyText from "./components/FancyText";
 
 class App extends Component {
     state = { text: "" };
@@ -14,8 +14,13 @@ class App extends Component {
         return (
             <div className="container">
                 <h2>
-                    Animated typing built with React and d3js v4 transitions
+                    Animated typing built with React 16+, D3js v5, and
+                    react-transition-group v2
                 </h2>
+                <p>
+                    Type some text. Delete stome stuff. Watch enter/update/exit
+                    transitions at play.
+                </p>
                 <p>
                     Inspired by Bostock's block{" "}
                     <a href="https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598">
@@ -35,8 +40,8 @@ class App extends Component {
                     }}
                 />
                 <svg width="100%" height="600">
-                    {/* <FancyText x="32" y="300" text={this.state.text} /> */}
-                    <Alphabet x={32} y={300} />
+                    <FancyText x="32" y="300" text={this.state.text} />
+                    {/* <Alphabet x={32} y={300} /> */}
                 </svg>
             </div>
         );
