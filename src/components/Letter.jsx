@@ -1,77 +1,100 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import * as d3 from "d3";
+import Transition from "react-transition-group/Transition";
 
 const ExitColor = "brown",
     UpdateColor = "#333",
     EnterColor = "green";
 
-class Letter extends Component {
-    state = {
+class Letter extends React.Component {
+    defaultState = {
         y: -60,
-        x: 0,
+        x: this.props.index * 32,
         color: EnterColor,
-        fillOpacity: 1e-6
+        fillOpacity: 1e-6,
+        index: this.props.index
     };
+    state = this.defaultState;
+    letterRef = React.createRef();
 
-    componentWillEnter(callback) {
-        let node = d3.select(ReactDOM.findDOMNode(this));
+    onEnter = () => {
+        let node = d3.select(this.letterRef.current);
 
-        this.setState({ x: this.props.i * 32 });
-
-        node
-            .transition(this.transition)
+        node.transition()
+            .duration(750)
+            .ease(d3.easeCubicInOut)
             .attr("y", 0)
             .style("fill-opacity", 1)
             .on("end", () => {
-                this.setState({ y: 0, fillOpacity: 1, color: UpdateColor });
-                callback();
+                this.setState({
+                    y: 0,
+                    fillOpacity: 1,
+                    color: UpdateColor
+                });
             });
-    }
+    };
 
-    componentWillLeave(callback) {
-        let node = d3.select(ReactDOM.findDOMNode(this));
+    onExit = () => {
+        let node = d3.select(this.letterRef.current);
 
-        this.setState({ color: ExitColor });
-
-        node
-            .interrupt()
+        node.interrupt()
+            .style("fill", ExitColor)
             .transition(this.transition)
             .attr("y", 60)
-            .style("fill-opacity", 1e-6)
-            .on("end", () => {
-                this.setState({ y: 60, fillOpacity: 1e-6 });
-                callback();
-            });
-    }
+            .style("fill-opacity", 1e-6);
+    };
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.i != nextProps.i) {
-            let node = d3.select(ReactDOM.findDOMNode(this));
+    componentDidUpdate() {
+        if (this.state.index !== this.props.index) {
+            let node = d3.select(this.letterRef.current),
+                targetX = this.props.index * 32;
 
-            this.setState({ color: UpdateColor });
-
-            node
-                .transition(this.transition)
-                .attr("x", nextProps.i * 32)
-                .on("end", () => this.setState({ x: nextProps.i * 32 }));
+            node.style("fill", UpdateColor)
+                .transition()
+                .duration(750)
+                .ease(d3.easeCubicInOut)
+                .attr("x", targetX)
+                .on("end", () =>
+                    this.setState({
+                        x: targetX,
+                        color: UpdateColor
+                    })
+                );
         }
     }
 
+    componentWillUnmount() {
+        console.log("will unmount");
+    }
+
     render() {
+        const { x, y, fillOpacity, color } = this.state,
+            { letter } = this.props;
+
         return (
-            <text
-                dy=".35em"
-                y={this.state.y}
-                x={this.state.x}
-                style={{
-                    fillOpacity: this.state.fillOpacity,
-                    fill: this.state.color,
-                    font: "bold 48px monospace"
-                }}
+            <Transition
+                in={this.props.in}
+                unmountOnExit={false}
+                timeout={750}
+                onEnter={this.onEnter}
+                onExit={this.onExit}
             >
-                {this.props.letter}
-            </text>
+                {state => (
+                    <text
+                        dy=".35em"
+                        x={x}
+                        y={y}
+                        style={{
+                            fillOpacity: fillOpacity,
+                            fill: color,
+                            font: "bold 48px monospace"
+                        }}
+                        ref={this.letterRef}
+                    >
+                        {letter}
+                    </text>
+                )}
+            </Transition>
         );
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ReactTransitionGroup from "react-addons-transition-group";
 import * as d3 from "d3";
+import { TransitionGroup } from "react-transition-group";
 
 import Letter from "./Letter";
 
@@ -8,7 +8,7 @@ class Alphabet extends Component {
     static letters = "abcdefghijklmnopqrstuvwxyz".split("");
     state = { alphabet: [] };
 
-    componentWillMount() {
+    componentDidMount() {
         d3.interval(
             () =>
                 this.setState({
@@ -25,24 +25,20 @@ class Alphabet extends Component {
     }
 
     render() {
-        let transform = `translate(${this.props.x}, ${this.props.y})`,
-            transition = d3
-                .transition()
-                .duration(750)
-                .ease(d3.easeCubicInOut);
+        let transform = `translate(${this.props.x}, ${this.props.y})`;
 
         return (
             <g transform={transform}>
-                <ReactTransitionGroup component="g">
+                <TransitionGroup
+                    appear={true}
+                    enter={true}
+                    exit={true}
+                    component="g"
+                >
                     {this.state.alphabet.map((d, i) => (
-                        <Letter
-                            letter={d}
-                            i={i}
-                            key={`letter-${d}`}
-                            transition={transition}
-                        />
+                        <Letter letter={d} index={i} key={`letter-${d}`} />
                     ))}
-                </ReactTransitionGroup>
+                </TransitionGroup>
             </g>
         );
     }

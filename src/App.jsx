@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import d3 from "d3";
 
 import Alphabet from "./components/Alphabet";
-import FancyText from "./components/FancyText";
+// import FancyText from "./components/FancyText";
 
 class App extends Component {
     state = { text: "" };
@@ -36,7 +35,8 @@ class App extends Component {
                     }}
                 />
                 <svg width="100%" height="600">
-                    <FancyText x="32" y="300" text={this.state.text} />
+                    {/* <FancyText x="32" y="300" text={this.state.text} /> */}
+                    <Alphabet x={32} y={300} />
                 </svg>
             </div>
         );
