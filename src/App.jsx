@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-// import Alphabet from "./components/Alphabet";
+import Alphabet from "./components/Alphabet";
 import FancyText from "./components/FancyText";
 
 class App extends Component {

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import * as d3 from "d3";
 import { TransitionGroup } from "react-transition-group";
 
 import Letter from "./Letter";
 
-class Alphabet extends Component {
+class Alphabet extends React.Component {
     static letters = "abcdefghijklmnopqrstuvwxyz".split("");
     state = { alphabet: [] };
 
